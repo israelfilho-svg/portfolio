@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Israel Filho Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Layout idea: the page reads like an editing timeline. Mono timecodes, a playhead line, clips as blocks. */
+:root {
+  --bg: #e9e8e3;
+  --surface: #f6f5f1;
+  --ink: #14161b;
+  --muted: #555a66;
+  --line: #c9c8c1;
+  --accent: #2a3bff;
+  --accent-ink: #ffffff;
+  --display: "Archivo", "Arial Narrow", Arial, sans-serif;
+  --body: "Archivo", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1116;
+    --surface: #171a21;
+    --ink: #eceef3;
+    --muted: #9aa0ae;
+    --line: #2a2e38;
+    --accent: #8a96ff;
+    --accent-ink: #0f1116;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1116;
+  --surface: #171a21;
+  --ink: #eceef3;
+  --muted: #9aa0ae;
+  --line: #2a2e38;
+  --accent: #8a96ff;
+  --accent-ink: #0f1116;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 17px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+.mono { font-family: var(--mono); font-size: 12.5px; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
+
+/* header */
+header.top { border-bottom: 1px solid var(--line); }
+header.top .wrap { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding-top: 16px; padding-bottom: 16px; flex-wrap: wrap; }
+.brand { font-family: var(--display); font-stretch: 75%; font-weight: 800; font-size: 20px; letter-spacing: .02em; text-transform: uppercase; text-decoration: none; }
+nav { display: flex; gap: 22px; flex-wrap: wrap; }
+nav a { font-family: var(--mono); font-size: 12.5px; text-transform: uppercase; letter-spacing: .05em; text-decoration: none; color: var(--muted); }
+nav a:hover { color: var(--ink); }
+
+/* hero */
+.hero { padding: 56px 0 40px; }
+.hero h1 {
+  font-family: var(--display);
+  font-stretch: 62%;
+  font-weight: 900;
+  font-size: clamp(54px, 13vw, 148px);
+  line-height: .9;
+  letter-spacing: -.01em;
+  text-transform: uppercase;
+  margin: 18px 0 26px;
+  text-wrap: balance;
+}
+.hero h1 em { font-style: normal; color: var(--accent); }
+.hero p.lead { max-width: 56ch; font-size: 19px; margin: 0 0 28px; }
+.cta { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn { display: inline-block; padding: 13px 22px; font-family: var(--mono); font-size: 13px; text-transform: uppercase; letter-spacing: .05em; text-decoration: none; border: 1.5px solid var(--ink); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.btn:hover { transform: translateY(-1px); }
+
+/* timeline strip */
+.timeline { position: relative; margin-top: 44px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 14px 0 12px; background: var(--surface); }
+.ruler { display: flex; justify-content: space-between; padding: 0 10px 8px; }
+.track { position: relative; height: 26px; margin: 5px 10px; }
+.clip { position: absolute; top: 0; bottom: 0; background: var(--line); border-left: 3px solid var(--ink); }
+.clip.a { background: color-mix(in srgb, var(--accent) 38%, var(--surface)); border-left-color: var(--accent); }
+.playhead { position: absolute; top: 0; bottom: 0; left: 62%; width: 2px; background: var(--accent); animation: sweep 2.2s cubic-bezier(.2,.7,.2,1) 1; }
+.playhead::before { content: ""; position: absolute; top: 0; left: -5px; border: 6px solid transparent; border-top-color: var(--accent); border-bottom: 0; }
+@keyframes sweep { from { left: 0; } to { left: 62%; } }
+
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 24px; padding: 28px 0 8px; }
+.facts b { display: block; font-family: var(--display); font-stretch: 75%; font-weight: 800; font-size: 28px; line-height: 1.1; text-transform: uppercase; }
+.facts span { color: var(--muted); font-size: 15px; }
+
+/* sections */
+section { padding: 72px 0 8px; }
+.sec-head { display: flex; align-items: baseline; gap: 16px; border-top: 1.5px solid var(--ink); padding-top: 14px; margin-bottom: 36px; flex-wrap: wrap; }
+.sec-head h2 { font-family: var(--display); font-stretch: 70%; font-weight: 900; font-size: clamp(34px, 6vw, 56px); line-height: 1; text-transform: uppercase; margin: 0; text-wrap: balance; }
+
+/* niches */
+.niche { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 36px; padding: 0 0 56px; }
+.niche + .niche { border-top: 1px solid var(--line); padding-top: 40px; }
+.niche h3 { font-family: var(--display); font-stretch: 75%; font-weight: 800; font-size: 32px; line-height: 1.05; text-transform: uppercase; margin: 8px 0 12px; }
+.niche p { margin: 0 0 14px; max-width: 46ch; }
+.niche ul { margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
+.niche li { font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: .04em; border: 1px solid var(--line); padding: 4px 9px; color: var(--muted); background: var(--surface); }
+.frames { display: flex; gap: 14px; align-items: flex-start; }
+.frame {
+  position: relative; flex: 1 1 0; min-width: 0; max-width: 230px; aspect-ratio: 9 / 16;
+  background:
+    repeating-linear-gradient(135deg, transparent 0 14px, color-mix(in srgb, var(--ink) 6%, transparent) 14px 15px),
+    var(--surface);
+  border: 1px solid var(--line);
+  display: flex; align-items: center; justify-content: center;
+}
+.frame .tc { position: absolute; top: 8px; left: 10px; }
+.frame .cap { position: absolute; left: 0; right: 0; bottom: 0; padding: 8px 10px; background: var(--ink); color: var(--bg); font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .04em; }
+.frame svg { width: 44px; height: 44px; fill: var(--accent); }
+.frame video { position: absolute; left: 0; top: 0; width: 100%; height: calc(100% - 30px); object-fit: cover; background: #000; }
+
+/* process */
+.steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0; border: 1px solid var(--line); background: var(--surface); }
+.step { padding: 24px 22px 26px; border-right: 1px solid var(--line); }
+.step:last-child { border-right: 0; }
+.step h3 { font-family: var(--display); font-stretch: 75%; font-weight: 800; font-size: 24px; text-transform: uppercase; margin: 10px 0 8px; }
+.step p { margin: 0; color: var(--muted); font-size: 16px; }
+
+/* pricing */
+.plans { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 360px)); gap: 18px; }
+.plan { border: 1.5px solid var(--ink); background: var(--surface); padding: 24px 22px; display: flex; flex-direction: column; gap: 6px; }
+.plan h3 { font-family: var(--display); font-stretch: 75%; font-weight: 800; font-size: 24px; text-transform: uppercase; margin: 0; }
+.price { font-family: var(--display); font-stretch: 62%; font-weight: 900; font-size: 56px; line-height: 1; margin: 8px 0 2px; font-variant-numeric: tabular-nums; }
+.price small { font-family: var(--mono); font-size: 12px; font-weight: 400; color: var(--muted); letter-spacing: .04em; text-transform: uppercase; }
+.plan ul { margin: 10px 0 0; padding-left: 18px; color: var(--muted); font-size: 15.5px; }
+.note { margin-top: 20px; color: var(--muted); font-size: 15px; max-width: 70ch; }
+
+/* contact */
+.contact { padding-bottom: 72px; }
+.contact-box { background: var(--ink); color: var(--bg); padding: 40px 28px; }
+.contact-box h3 { font-family: var(--display); font-stretch: 62%; font-weight: 900; font-size: clamp(40px, 8vw, 84px); line-height: .95; text-transform: uppercase; margin: 0 0 18px; text-wrap: balance; }
+.contact-box p { margin: 0 0 8px; max-width: 54ch; }
+.contact-box .addr { font-family: var(--mono); font-size: 18px; margin-top: 18px; display: inline-block; border-bottom: 2px solid var(--accent); padding-bottom: 2px; word-break: break-all; }
+.contact-box .mono { color: color-mix(in srgb, var(--bg) 70%, var(--ink)); }
+
+footer { border-top: 1px solid var(--line); padding: 20px 0 36px; }
+footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+
+@media (max-width: 760px) {
+  body { font-size: 16.5px; }
+  .hero { padding-top: 36px; }
+  .niche { grid-template-columns: 1fr; gap: 22px; }
+  .step { border-right: 0; border-bottom: 1px solid var(--line); }
+  .step:last-child { border-bottom: 0; }
+  .frame { max-width: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .playhead { animation: none; }
+  .btn:hover { transform: none; }
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top">Israel Filho</a>
+    <nav aria-label="Sections">
+      <a href="#work">Work</a>
+      <a href="#process">Process</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <div class="wrap">
+    <div class="hero">
+      <div class="mono">Video editor · Storytelling &amp; short-form</div>
+      <h1>Cuts that keep people <em>watching.</em></h1>
+      <p class="lead">I edit short-form storytelling video for fiction and story channels on Shorts, Reels and TikTok. You send the script or footage, you get back a finished episode with captions, sound and pacing already handled.</p>
+      <div class="cta">
+        <a class="btn primary" href="#contact">Get a quote</a>
+        <a class="btn" href="#work">See the work</a>
+      </div>
+
+      <div class="timeline" aria-hidden="true">
+        <div class="ruler mono"><span>00:00</span><span>00:15</span><span>00:30</span><span>00:45</span><span>01:00</span></div>
+        <div class="track">
+          <div class="clip a" style="left:0;width:24%"></div>
+          <div class="clip" style="left:25%;width:14%"></div>
+          <div class="clip a" style="left:40%;width:30%"></div>
+          <div class="clip" style="left:71%;width:29%"></div>
+        </div>
+        <div class="track">
+          <div class="clip" style="left:6%;width:18%"></div>
+          <div class="clip a" style="left:30%;width:22%"></div>
+          <div class="clip" style="left:58%;width:26%"></div>
+        </div>
+        <div class="track">
+          <div class="clip a" style="left:0;width:100%;opacity:.55"></div>
+        </div>
+        <div class="playhead"></div>
+      </div>
+
+      <div class="facts">
+        <div><b>60–90 s</b><span>The length of an episode. Every second is a cut decision.</span></div>
+        <div><b>48–72 h</b><span>Typical turnaround for a first cut.</span></div>
+        <div><b>2 rounds</b><span>Of revisions included in every project.</span></div>
+        <div><b>1 day</b><span>Maximum reply time on working days.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <section id="work">
+    <div class="wrap">
+      <div class="sec-head"><span class="mono">Selected work</span><h2>Storytelling videos</h2></div>
+
+      <article class="niche">
+        <div>
+          <div class="mono">01 · Storytelling</div>
+          <h3>Fiction &amp; story channels</h3>
+          <p>Narrated short stories and series for Shorts, Reels and TikTok. Voiceover timing, scene pacing, animated or stock visuals and word-by-word captions, built so a series keeps one look across episodes.</p>
+          <ul><li>60–90 s episodes</li><li>Narration sync</li><li>Series style guide</li></ul>
+        </div>
+        <div class="frames">
+          <div class="frame"><video controls playsinline preload="none" poster="media/ep2.jpg" src="media/ep2.mp4" aria-label="Dead Signal, episode 2"></video><div class="cap">Dead Signal · Ep 2</div></div>
+          <div class="frame"><video controls playsinline preload="none" poster="media/ep3.jpg" src="media/ep3.mp4" aria-label="Dead Signal, episode 3"></video><div class="cap">Dead Signal · Ep 3</div></div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section id="process">
+    <div class="wrap">
+      <div class="sec-head"><span class="mono">How it works</span><h2>From raw footage to posted</h2></div>
+      <div class="steps">
+        <div class="step"><span class="mono">Step 1</span><h3>Send the footage</h3><p>Share a folder link and a short brief: the goal, a reference video you like, and the platform. I confirm scope and price before I start.</p></div>
+        <div class="step"><span class="mono">Step 2</span><h3>First cut in 48–72 h</h3><p>You get the edit with captions, music and sound levels done, as a private review link you can comment on.</p></div>
+        <div class="step"><span class="mono">Step 3</span><h3>Revise and deliver</h3><p>Two rounds of changes are included. Final files come in the right size for each platform, plus a clean version without captions.</p></div>
+      </div>
+      <p class="note">Captions, titles and motion graphics are built from reusable templates, so once your style is set, every new video matches the last and revisions are quick.</p>
+    </div>
+  </section>
+
+  <section id="pricing">
+    <div class="wrap">
+      <div class="sec-head"><span class="mono">Launch prices · USD</span><h2>Simple pricing</h2></div>
+      <div class="plans">
+        <div class="plan">
+          <h3>Short-form edit</h3>
+          <div class="price">$15 <small>/ video</small></div>
+          <span class="mono">Up to 90 s</span>
+          <ul><li>Cuts, pacing and captions</li><li>Music and sound mix</li><li>2 revision rounds</li></ul>
+        </div>
+      </div>
+      <p class="note">These launch prices are for my first clients only. Final price depends on footage length and complexity. Regular volume, such as 12 or 30 episodes a month, gets a monthly rate. You can start with a single test video before committing to more.</p>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <div class="wrap">
+      <div class="contact-box">
+        <div class="mono">Contact</div>
+        <h3>Send me your next video</h3>
+        <p>Tell me what you post, where, and how often. I reply within one working day with a price and a start date.</p>
+        <span class="addr">tikin.edit@gmail.com</span>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap mono">
+    <span>Israel Filho · Video editing</span>
+    <span>tikin.edit@gmail.com</span>
+  </div>
+</footer>
+
+</body>
+</html>
